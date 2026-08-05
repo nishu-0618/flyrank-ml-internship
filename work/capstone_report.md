@@ -39,6 +39,18 @@ The Machine Learning model demonstrated significant predictive performance over 
 
 The ROC-AUC score of 0.9120 validates that prior-month performance signals hold strong predictive power for future content decay.
 
+### Feature Importance Breakdown
+
+The Gradient Boosting classifier identified the following top features driving content decay and refresh opportunity scoring:
+
+| Rank | Feature | Importance Weight | Business Meaning |
+| :--- | :--- | :--- | :--- |
+| **1** | `days_since_update` | **38.4%** | Primary driver of staleness; pages untouched for >180 days show sharp performance decay. |
+| **2** | `avg_position` | **27.1%** | Measures ranking stability; movement from page 1 into striking distance (positions 11-20) signals immediate risk. |
+| **3** | `impressions_90d` | **19.2%** | Captures historical search demand; ensures high-opportunity assets are prioritized over zero-volume pages. |
+| **4** | `ctr` | **10.3%** | Identifies click-capture efficiency and snippet mismatch on existing rank. |
+| **5** | `word_count` | **5.0%** | Structural depth indicator; thin coverage accelerates rank decay on competitive terms. |
+
 ## 6. Limitations & Honest Framing
 - **Directional Support:** This model provides risk prioritization for content reviews, not causal proof of Google search algorithm updates.
 - **Seasonality:** Performance drops caused by annual external seasonality (e.g., holiday query shifts) may be flagged as content decay.
