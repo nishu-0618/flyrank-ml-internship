@@ -1,0 +1,11 @@
+{
+    "week": 4,
+    "phase": "Build",
+    "dataset": "data/raw/content_refresh_anonymized.csv",
+    "rows_scored": 30000,
+    "top_reason_code": "HIGH_IMP_LOW_CTR",
+    "top_action_label": "REFRESH_META_AND_TITLE",
+    "output_csv_generated": true,
+    "output_csv_path": "work/outputs/baseline_action_score.csv",
+    "status": "COMPLETED"
+}
