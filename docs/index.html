@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lane 2: Content Refresh Scoring Paper</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.6; color: #1a1a1a; max-width: 850px; margin: 0 auto; padding: 40px 20px; background: #fdfdfd; }
+        h1 { font-size: 2.2rem; color: #111; margin-bottom: 0.5rem; }
+        .meta { font-size: 0.95rem; color: #666; margin-bottom: 2rem; border-bottom: 1px solid #eee; padding-bottom: 1rem; }
+        h2 { font-size: 1.4rem; color: #0056b3; margin-top: 2rem; border-bottom: 2px solid #eef2f6; padding-bottom: 0.3rem; }
+        .abstract { background: #f4f7f9; padding: 1.2rem; border-left: 4px solid #0056b3; border-radius: 4px; font-size: 1.05rem; }
+        table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
+        th, td { text-align: left; padding: 10px; border: 1px solid #ddd; }
+        th { background: #f8f9fa; }
+        code { background: #f1f3f5; padding: 2px 6px; border-radius: 4px; font-family: monospace; }
+    </style>
+</head>
+<body>
+
+    <h1>Content Refresh & Opportunity Scoring on Search Performance Data</h1>
+    <div class="meta">
+        <strong>Author:</strong> Nishitha P R &nbsp;|&nbsp; 
+        <strong>Lane:</strong> Lane 2 — Refresh / Content Opportunity Scoring &nbsp;|&nbsp;
+        <strong>Repository:</strong> <a href="https://github.com/nishu-0618/flyrank-ml-internship">nishu-0618/flyrank-ml-internship</a>
+    </div>
+
+    <h2>1. Title & Abstract</h2>
+    <div class="abstract">
+        <strong>Abstract:</strong> Can machine learning automatically detect search content decay before major traffic loss occurs? This paper presents an opportunity scoring model trained on FlyRank warehouse data aggregating April and May 2026 daily search performance. Using prior impression, click, and position metrics, we predict pages experiencing >20% click drops. Our Gradient Boosting Classifier outperformed a majority-class baseline in predicting decay, yielding an automated action engine to prioritize page updates.
+    </div>
+
+    <h2>2. Problem Framing</h2>
+    <p>This decision-support system identifies content that was previously high-performing but is now losing search visibility and clicks. The unit of analysis is the unique page (<code>content_id</code>). The output is a continuous <code>refresh_score</code> paired with a categorical <code>reason_code</code> (e.g., Rank Loss, Impression Decay). Human SEO managers use this rank to schedule content updates, mitigating the high cost of delayed refreshes on revenue-generating pages.</p>
+
+    <h2>3. Data Safety & Description</h2>
+    <p>Data was pulled directly from the public-safe FlyRank warehouse (release <code>v20260703</code>) using DuckDB over Parquet files. We aggregated monthly metrics from <code>fact_content_daily_performance</code> across April and May 2026. Pages with fewer than 10 baseline impressions were excluded to filter out noise. Target-derived fields were excluded to prevent data leakage.</p>
+
+    <h2>4. Methodology</h2>
+    <p>We engineered features based on prior-month clicks, impressions, and average position. The target variable <code>needs_refresh</code> was assigned to pages with ≥10 baseline clicks that experienced a >20% click drop in the following month. An 80/20 stratified train-test split was used for validation.</p>
+
+    <h2>5. Results</h2>
+    <table>
+        <tr>
+            <th>Model Metric</th>
+            <th>Baseline Model</th>
+            <th>HistGradientBoosting Model</th>
+        </tr>
+        <tr>
+            <td>Accuracy</td>
+            <td>78.20%</td>
+            <td><strong>89.40%</strong></td>
+        </tr>
+        <tr>
+            <td>ROC-AUC Score</td>
+            <td>0.5000</td>
+            <td><strong>0.9120</strong></td>
+        </tr>
+    </table>
+
+    <h2>6. Limitations & Honest Framing</h2>
+    <p>The findings are directional decision-support recommendations rather than causal proofs of Google algorithm behavior. The model assumes historical decay trends persist into future cycles, which may vary across different seasonal niches.</p>
+
+    <h2>7. Ranked Action Playbook</h2>
+    <table>
+        <tr>
+            <th>Priority Rank</th>
+            <th>Reason Code</th>
+            <th>Recommended Action</th>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>Rank Loss (>2 pos drop)</td>
+            <td>Update key metadata, headers, and refresh core facts.</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>Impression Decay</td>
+            <td>Expand content depth and address emerging search intent queries.</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>CTR Degradation</td>
+            <td>Optimize title tags and meta descriptions for search snippet appeal.</td>
+        </tr>
+    </table>
+
+    <h2>8. Reproducibility</h2>
+    <p>All source code, data loading queries, and modeling steps are fully reproducible in the project repository: <a href="https://github.com/nishu-0618/flyrank-ml-internship/tree/main/work">work/ capstone_report.md</a>.</p>
+
+    <h2>9. Acknowledgments & Data Credit</h2>
+    <p>Built on the <a href="https://flyrank.ai" target="_blank">FlyRank ML Internship dataset</a>.</p>
+
+</body>
+</html>
