@@ -52,9 +52,13 @@ The Gradient Boosting classifier identified the following top features driving c
 | **5** | `word_count` | **5.0%** | Structural depth indicator; thin coverage accelerates rank decay on competitive terms. |
 
 ## 6. Limitations & Honest Framing
-- **Directional Support:** This model provides risk prioritization for content reviews, not causal proof of Google search algorithm updates.
-- **Seasonality:** Performance drops caused by annual external seasonality (e.g., holiday query shifts) may be flagged as content decay.
-- **Window Scope:** The model currently relies on a 2-month rolling window; expanding to a 6-month historical window would improve seasonal filtering.
+While the Gradient Boosting model effectively triages content updates, any deployment must account for the following structural and data-driven limitations:
+
+- **Correlation vs. Causation:** This model identifies performance decay but cannot diagnose the root cause. A sudden drop in rankings might stem from a Google Core Algorithm update or changes to SERP features rather than inherent content staleness.
+- **Temporal & Seasonal Bias:** The current pipeline relies on a narrow 2-month window (April to May 2026). Performance drops caused by natural external seasonality (e.g., holiday cycles) will likely be flagged as false-positive decay. A 12-month lookback is required to normalize this variance.
+- **The "Cold Start" Blind Spot:** Because we filter out URLs with <10 baseline impressions to reduce noise, this system cannot score newly published pages or highly niche, long-tail content. 
+- **Omission of Off-Page Signals:** The feature matrix relies on behavioral metrics and basic metadata. It does not factor in off-page dynamics (e.g., competitor backlink acquisition) or semantic content quality.
+- **Feedback Loop Risks:** By continuously routing editorial resources only to historically high-traffic pages, the business risks creating a self-fulfilling prophecy where middle-tier content is permanently starved of updates.
 
 ## 7. Action Playbook & Ranked Recommendations
 The trained scoring engine generates ranked action lists for content teams paired with explicit reason codes:
