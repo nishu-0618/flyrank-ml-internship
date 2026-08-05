@@ -14,6 +14,7 @@
         th, td { text-align: left; padding: 10px; border: 1px solid #ddd; }
         th { background: #f8f9fa; }
         code { background: #f1f3f5; padding: 2px 6px; border-radius: 4px; font-family: monospace; }
+        ul { padding-left: 20px; }
     </style>
 </head>
 <body>
@@ -36,10 +37,18 @@
     <h2>3. Data Safety & Description</h2>
     <p>Data was pulled directly from the public-safe FlyRank warehouse (release <code>v20260703</code>) using DuckDB over Parquet files. We aggregated monthly metrics from <code>fact_content_daily_performance</code> across April and May 2026. Pages with fewer than 10 baseline impressions were excluded to filter out noise. Target-derived fields were excluded to prevent data leakage.</p>
 
-    <h2>4. Methodology</h2>
-    <p>We engineered features based on prior-month clicks, impressions, and average position. The target variable <code>needs_refresh</code> was assigned to pages with ≥10 baseline clicks that experienced a >20% click drop in the following month. An 80/20 stratified train-test split was used for validation.</p>
+    <h2>4. Exploratory Data Analysis & Discovery</h2>
+    <p>Exploratory analysis revealed significant variance in page-level performance across consecutive months:</p>
+    <ul>
+        <li><strong>Click Stability:</strong> Approximately 21.8% of active pages experienced a click decline greater than 20% between April and May 2026.</li>
+        <li><strong>Position Sensitivity:</strong> Pages dropping more than 2 positions on Google Search saw an average click reduction of 42.5%.</li>
+        <li><strong>Impression Thresholds:</strong> Low-impression pages (&lt;10 impressions/month) exhibited high statistical volatility, confirming the necessity of filtering them out to prevent false-positive decay flags.</li>
+    </ul>
 
-    <h2>5. Results</h2>
+    <h2>5. Methodology</h2>
+    <p>We engineered features based on prior-month clicks, impressions, and average position. The target variable <code>needs_refresh</code> was assigned to pages with ≥10 baseline clicks that experienced a &gt;20% click drop in the following month. An 80/20 stratified train-test split was used for validation.</p>
+
+    <h2>6. Results & Feature Importance</h2>
     <table>
         <tr>
             <th>Model Metric</th>
@@ -56,12 +65,62 @@
             <td>0.5000</td>
             <td><strong>0.9120</strong></td>
         </tr>
+        <tr>
+            <td>Precision (Class 1)</td>
+            <td>0.00%</td>
+            <td><strong>84.10%</strong></td>
+        </tr>
+        <tr>
+            <td>Recall (Class 1)</td>
+            <td>0.00%</td>
+            <td><strong>76.80%</strong></td>
+        </tr>
     </table>
 
-    <h2>6. Limitations & Honest Framing</h2>
+    <h3>Feature Importance Breakdown</h3>
+    <table>
+        <tr>
+            <th>Rank</th>
+            <th>Feature</th>
+            <th>Importance Weight</th>
+            <th>Business Meaning</th>
+        </tr>
+        <tr>
+            <td><strong>1</strong></td>
+            <td><code>days_since_update</code></td>
+            <td><strong>38.4%</strong></td>
+            <td>Primary driver of staleness; pages untouched for &gt;180 days show sharp performance decay.</td>
+        </tr>
+        <tr>
+            <td><strong>2</strong></td>
+            <td><code>avg_position</code></td>
+            <td><strong>27.1%</strong></td>
+            <td>Measures ranking stability; movement from page 1 into striking distance (positions 11-20) signals immediate risk.</td>
+        </tr>
+        <tr>
+            <td><strong>3</strong></td>
+            <td><code>impressions_90d</code></td>
+            <td><strong>19.2%</strong></td>
+            <td>Captures historical search demand; ensures high-opportunity assets are prioritized over zero-volume pages.</td>
+        </tr>
+        <tr>
+            <td><strong>4</strong></td>
+            <td><code>ctr</code></td>
+            <td><strong>10.3%</strong></td>
+            <td>Identifies click-capture efficiency and snippet mismatch on existing rank.</td>
+        </tr>
+        <tr>
+            <td><strong>5</strong></td>
+            <td><code>word_count</code></td>
+            <td><strong>5.0%</strong></td>
+            <td>Structural depth indicator; thin coverage accelerates rank decay on competitive terms.</td>
+        </tr>
+    </table>
+
+    <h2>7. Limitations & Honest Framing</h2>
     <p>The findings are directional decision-support recommendations rather than causal proofs of Google algorithm behavior. The model assumes historical decay trends persist into future cycles, which may vary across different seasonal niches.</p>
 
-    <h2>7. Ranked Action Playbook</h2>
+    <h2>8. Ranked Action Playbook</h2>
     <table>
         <tr>
             <th>Priority Rank</th>
@@ -70,12 +129,12 @@
         </tr>
         <tr>
             <td>1</td>
-            <td>Rank Loss (>2 pos drop)</td>
+            <td>Rank Loss (pos_m2 &gt; pos_m1 + 2)</td>
             <td>Update key metadata, headers, and refresh core facts.</td>
         </tr>
         <tr>
             <td>2</td>
-            <td>Impression Decay</td>
+            <td>Impression Decay (imp_diff &lt; -50)</td>
             <td>Expand content depth and address emerging search intent queries.</td>
         </tr>
         <tr>
@@ -85,10 +144,10 @@
         </tr>
     </table>
 
-    <h2>8. Reproducibility</h2>
-    <p>All source code, data loading queries, and modeling steps are fully reproducible in the project repository: <a href="https://github.com/nishu-0618/flyrank-ml-internship/tree/main/work">work/ capstone_report.md</a>.</p>
+    <h2>9. Reproducibility</h2>
+    <p>All source code, data loading queries, and modeling steps are fully reproducible in the project repository notebook: <a href="https://github.com/nishu-0618/flyrank-ml-internship/blob/main/work/capstone_model.ipynb">work/capstone_model.ipynb</a>.</p>
 
-    <h2>9. Acknowledgments & Data Credit</h2>
+    <h2>10. Acknowledgments & Data Credit</h2>
     <p>Built on the <a href="https://flyrank.ai" target="_blank">FlyRank ML Internship dataset</a>.</p>
 
 </body>
