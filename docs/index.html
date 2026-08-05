@@ -117,9 +117,15 @@
         </tr>
     </table>
 
-    <h2>7. Limitations & Honest Framing</h2>
-    <p>The findings are directional decision-support recommendations rather than causal proofs of Google algorithm behavior. The model assumes historical decay trends persist into future cycles, which may vary across different seasonal niches.</p>
-
+   <h2>7. Limitations & Honest Framing</h2>
+    <p>While the Gradient Boosting model effectively triages content updates, any deployment must account for the following structural and data-driven limitations:</p>
+    <ul>
+        <li><strong>Correlation vs. Causation (Algorithm Updates):</strong> This model identifies performance decay but cannot diagnose the root cause. A sudden drop in rankings might stem from a Google Core Algorithm update or changes to SERP features (e.g., the introduction of AI Overviews) rather than inherent content staleness.</li>
+        <li><strong>Temporal & Seasonal Bias:</strong> The current pipeline relies on a narrow 2-month rolling window (April to May 2026). Consequently, performance drops caused by natural external seasonality (e.g., end-of-quarter query shifts, holiday cycles) will likely be flagged as false-positive "content decay." A minimum 12-month lookback is required to normalize seasonal variance.</li>
+        <li><strong>The "Cold Start" Blind Spot:</strong> Because the pipeline filters out URLs with fewer than 10 baseline impressions to reduce statistical noise, this system cannot score newly published pages or highly niche, long-tail content. It is strictly a maintenance tool for established assets.</li>
+        <li><strong>Omission of Off-Page & Semantic Signals:</strong> The feature matrix relies exclusively on Search Console behavioral metrics and basic on-page metadata (recency, word count). It does not factor in off-page dynamics (e.g., competitor backlink acquisition) or semantic superiority (e.g., whether a competitor's page actually answers the user intent better).</li>
+        <li><strong>Feedback Loop Risks:</strong> By continuously routing editorial resources only to historically high-traffic pages that are decaying, the business risks creating a self-fulfilling prophecy where middle-tier or exploratory content is permanently starved of updates.</li>
+    </ul>
     <h2>8. Ranked Action Playbook</h2>
     <table>
         <tr>
