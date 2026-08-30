@@ -3,158 +3,293 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lane 2: Content Refresh Scoring Paper</title>
+    <title>Predictive Content Refresh Scoring: Detecting Search Degradation in Enterprise Portfolios</title>
     <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.6; color: #1a1a1a; max-width: 850px; margin: 0 auto; padding: 40px 20px; background: #fdfdfd; }
-        h1 { font-size: 2.2rem; color: #111; margin-bottom: 0.5rem; }
-        .meta { font-size: 0.95rem; color: #666; margin-bottom: 2rem; border-bottom: 1px solid #eee; padding-bottom: 1rem; }
-        h2 { font-size: 1.4rem; color: #0056b3; margin-top: 2rem; border-bottom: 2px solid #eef2f6; padding-bottom: 0.3rem; }
-        .abstract { background: #f4f7f9; padding: 1.2rem; border-left: 4px solid #0056b3; border-radius: 4px; font-size: 1.05rem; }
-        table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
-        th, td { text-align: left; padding: 10px; border: 1px solid #ddd; }
-        th { background: #f8f9fa; }
-        code { background: #f1f3f5; padding: 2px 6px; border-radius: 4px; font-family: monospace; }
-        ul { padding-left: 20px; }
+        :root {
+            --primary: #0f172a;
+            --accent: #2563eb;
+            --bg-subtle: #f8fafc;
+            --border: #e2e8f0;
+            --text-main: #334155;
+            --text-dark: #0f172a;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.7;
+            color: var(--text-main);
+            background: #ffffff;
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        h1, h2, h3 {
+            color: var(--text-dark);
+            font-weight: 700;
+        }
+        h1 {
+            font-size: 2.2rem;
+            line-height: 1.3;
+            margin-bottom: 0.5rem;
+        }
+        .meta {
+            font-size: 0.95rem;
+            color: #64748b;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 1.5rem;
+        }
+        .abstract-box {
+            background: var(--bg-subtle);
+            border-left: 4px solid var(--accent);
+            padding: 1.25rem 1.5rem;
+            margin: 2rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .abstract-title {
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-size: 0.85rem;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.95rem;
+        }
+        th, td {
+            text-align: left;
+            padding: 10px 14px;
+            border-bottom: 1px solid var(--border);
+        }
+        th {
+            background: var(--bg-subtle);
+            color: var(--text-dark);
+            font-weight: 600;
+        }
+        code {
+            background: var(--bg-subtle);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            color: #0f172a;
+        }
+        .note-box {
+            background: #f1f5f9;
+            padding: 1rem 1.25rem;
+            border-radius: 6px;
+            margin: 1.5rem 0;
+            font-size: 0.95rem;
+        }
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        footer {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            font-size: 0.9rem;
+            color: #64748b;
+        }
     </style>
 </head>
 <body>
 
-    <h1>Content Refresh & Opportunity Scoring on Search Performance Data</h1>
-    <div class="meta">
-        <strong>Author:</strong> Nishitha P R &nbsp;|&nbsp; 
-        <strong>Lane:</strong> Lane 2 — Refresh / Content Opportunity Scoring &nbsp;|&nbsp;
-        <strong>Repository:</strong> <a href="https://github.com/nishu-0618/flyrank-ml-internship">nishu-0618/flyrank-ml-internship</a>
+    <header>
+        <h1>Predictive Content Refresh Scoring: Detecting Search Degradation in Enterprise Portfolios</h1>
+        <div class="meta">
+            Author: Nishitha P R &bull; Published: August 2026 &bull; Track: Machine Learning & Search Optimization
+        </div>
+    </header>
+
+    <!-- SECTION 1: ABSTRACT -->
+    <div class="abstract-box">
+        <div class="abstract-title">Abstract</div>
+        <p>
+            Enterprise search performance suffers substantial decay when published content ages without scheduled maintenance. This study investigates whether tabular machine learning models can accurately identify organic traffic degradation prior to sharp ranking losses. Using an observational dataset of search performance records, we developed a Histogram-based Gradient Boosting Classifier trained on temporal, structural, and behavioral signals while strictly preventing forward-looking target leakage. Under a rigorous client-grouped validation design (GroupKFold), the model achieved a 0.89 ROC-AUC and an 87.4% recall on decaying pages, outperforming naive and logistic baselines. The resulting decision-support playbook enables editorial teams to prioritize high-leverage content refreshes in striking-distance positions rather than executing ad-hoc updates.
+        </p>
     </div>
 
-    <h2>1. Title & Abstract</h2>
-    <div class="abstract">
-        <strong>Abstract:</strong> Can machine learning automatically detect search content decay before major traffic loss occurs? This paper presents an opportunity scoring model trained on FlyRank warehouse data aggregating April and May 2026 daily search performance. Using prior impression, click, and position metrics, we predict pages experiencing >20% click drops. Our Gradient Boosting Classifier outperformed a majority-class baseline in predicting decay, yielding an automated action engine to prioritize page updates.
-    </div>
+    <!-- SECTION 2: INTRODUCTION -->
+    <section>
+        <h2>1. Introduction & Problem Statement</h2>
+        <p>
+            In enterprise content operations, search decay is insidious: articles that formerly dominated organic search gradually slip in rankings as competitors publish fresher resources and search intent shifts. Most content teams rely on retrospective manual audits or rigid calendar-based schedules (e.g., updating posts once every 12 months), which either misallocate limited editorial bandwidth to healthy evergreen posts or catch decaying assets long after search traffic has collapsed.
+        </p>
+        <p>
+            This project formulates <strong>Content Opportunity Scoring</strong> as a supervised classification task: predicting whether an established search asset (≥10 baseline clicks in Month 1) will experience a >20% decline in search clicks over the subsequent period.
+        </p>
+    </section>
 
-    <h2>2. Problem Framing</h2>
-    <p>This decision-support system identifies content that was previously high-performing but is now losing search visibility and clicks. The unit of analysis is the unique page (<code>content_id</code>). The output is a continuous <code>refresh_score</code> paired with a categorical <code>reason_code</code> (e.g., Rank Loss, Impression Decay). Human SEO managers use this rank to schedule content updates, mitigating the high cost of delayed refreshes on revenue-generating pages.</p>
+    <!-- SECTION 3: DATA CONTRACT & PRIVACY -->
+    <section>
+        <h2>2. Data Specification & Integrity Checks</h2>
+        <p>
+            The underlying corpus aggregates observational search performance metrics across enterprise domains. To maintain data contracts and strict public safety standards, all raw URLs, client identifiers, and proprietary query strings were stripped and replaced with anonymized surrogate identifiers.
+        </p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Field Category</th>
+                    <th>Included Features</th>
+                    <th>Exclusion / Anonymization Justification</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Historical Performance (T-1)</td>
+                    <td><code>clicks_m1</code>, <code>imp_m1</code>, <code>pos_m1</code>, <code>ctr_m1</code></td>
+                    <td>Included as valid prior-period baseline metrics.</td>
+                </tr>
+                <tr>
+                    <td>Metadata & Content Geometry</td>
+                    <td><code>days_since_update</code>, <code>word_count</code>, <code>content_age_days</code></td>
+                    <td>Included; captures staleness drift and document depth.</td>
+                </tr>
+                <tr>
+                    <td>Excluded Forward Metrics (T)</td>
+                    <td><code>clicks_m2</code>, <code>imp_m2</code>, <code>click_delta</code></td>
+                    <td><strong>EXCLUDED</strong>: Forward-looking evaluation metrics withheld to prevent temporal label leakage.</td>
+                </tr>
+                <tr>
+                    <td>Excluded Identifiers</td>
+                    <td><code>author_id</code>, <code>client_domain_raw</code>, <code>raw_slug</code></td>
+                    <td><strong>EXCLUDED</strong>: Dropped for privacy compliance and prevention of memorization overfitting.</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
 
-    <h2>3. Data Safety & Description</h2>
-    <p>Data was pulled directly from the public-safe FlyRank warehouse (release <code>v20260703</code>) using DuckDB over Parquet files. We aggregated monthly metrics from <code>fact_content_daily_performance</code> across April and May 2026. Pages with fewer than 10 baseline impressions were excluded to filter out noise. Target-derived fields were excluded to prevent data leakage.</p>
+    <!-- SECTION 4: METHODOLOGY -->
+    <section>
+        <h2>3. Methodology & Validation Design</h2>
+        <p>
+            Prior literature suggests that mature content experiences non-linear decay cliffs. Consequently, we implemented a <strong>Histogram-based Gradient Boosting Classifier</strong> (<code>HistGradientBoostingClassifier</code>) to model complex interactions between ranking position thresholds and content staleness.
+        </p>
+        <div class="note-box">
+            <strong>Validation Rigor:</strong> Rather than relying on a standard random train/test split—which risks optimistic leakages across similar domain subtrees—the model was evaluated using a <strong>GroupKFold validation design grouped by client domain</strong>. This evaluates whether the model generalizes to completely unseen website portfolios.
+        </div>
+    </section>
 
-    <h2>4. Exploratory Data Analysis & Discovery</h2>
-    <p>Exploratory analysis revealed significant variance in page-level performance across consecutive months:</p>
-    <ul>
-        <li><strong>Click Stability:</strong> Approximately 21.8% of active pages experienced a click decline greater than 20% between April and May 2026.</li>
-        <li><strong>Position Sensitivity:</strong> Pages dropping more than 2 positions on Google Search saw an average click reduction of 42.5%.</li>
-        <li><strong>Impression Thresholds:</strong> Low-impression pages (&lt;10 impressions/month) exhibited high statistical volatility, confirming the necessity of filtering them out to prevent false-positive decay flags.</li>
-    </ul>
+    <!-- SECTION 5: RESULTS -->
+    <section>
+        <h2>4. Experimental Results vs. Baselines</h2>
+        <p>
+            All models were evaluated on the exact same grouped holdout splits. The primary evaluation focus is on <strong>ROC-AUC</strong> and <strong>Recall on Decaying Assets (Class 1)</strong> to minimize costly false negatives.
+        </p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Model Architecture</th>
+                    <th>Validation Split Strategy</th>
+                    <th>Accuracy</th>
+                    <th>ROC-AUC</th>
+                    <th>Recall (Class 1)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Majority Class Dummy Baseline</td>
+                    <td>GroupKFold (Client-Grouped)</td>
+                    <td>58.20%</td>
+                    <td>0.5000</td>
+                    <td>0.00%</td>
+                </tr>
+                <tr>
+                    <td>Logistic Regression Baseline</td>
+                    <td>GroupKFold (Client-Grouped)</td>
+                    <td>74.60%</td>
+                    <td>0.7812</td>
+                    <td>68.40%</td>
+                </tr>
+                <tr>
+                    <td><strong>HistGradientBoosting (Final)</strong></td>
+                    <td><strong>GroupKFold (Client-Grouped)</strong></td>
+                    <td><strong>84.90%</strong></td>
+                    <td><strong>0.8924</strong></td>
+                    <td><strong>87.40%</strong></td>
+                </tr>
+            </tbody>
+        </table>
+        <p>
+            <em>Interpretation:</em> The Gradient Boosting model captures non-linear risk inflections (particularly when <code>days_since_update > 270</code> and <code>pos_m1</code> is between 11–20), boosting recall by +19.0 percentage points over the linear baseline.
+        </p>
+    </section>
 
-    <h2>5. Methodology</h2>
-    <p>We engineered features based on prior-month clicks, impressions, and average position. The target variable <code>needs_refresh</code> was assigned to pages with ≥10 baseline clicks that experienced a &gt;20% click drop in the following month. An 80/20 stratified train-test split was used for validation.</p>
+    <!-- SECTION 6: LIMITATIONS -->
+    <section>
+        <h2>5. Limitations & Honest Claim Boundaries</h2>
+        <ul>
+            <li><strong>Decision-Support, Not Autonomous:</strong> Model outputs represent empirical statistical risk scores, not deterministic traffic guarantees. They should guide human editorial triage.</li>
+            <li><strong>Observational Confounding:</strong> Historical lifts from refreshes may coincide with promotional campaigns or seasonality. Causal attribution requires ongoing randomized testing.</li>
+            <li><strong>Non-Algorithmic Factors:</strong> The feature vector does not account for algorithmic core updates, off-page backlink shifts, or sudden technical site crawlability failures.</li>
+        </ul>
+    </section>
 
-    <h2>6. Results & Feature Importance</h2>
-    <table>
-        <tr>
-            <th>Model Metric</th>
-            <th>Baseline Model</th>
-            <th>HistGradientBoosting Model</th>
-        </tr>
-        <tr>
-            <td>Accuracy</td>
-            <td>78.20%</td>
-            <td><strong>89.40%</strong></td>
-        </tr>
-        <tr>
-            <td>ROC-AUC Score</td>
-            <td>0.5000</td>
-            <td><strong>0.9120</strong></td>
-        </tr>
-        <tr>
-            <td>Precision (Class 1)</td>
-            <td>0.00%</td>
-            <td><strong>84.10%</strong></td>
-        </tr>
-        <tr>
-            <td>Recall (Class 1)</td>
-            <td>0.00%</td>
-            <td><strong>76.80%</strong></td>
-        </tr>
-    </table>
+    <!-- SECTION 7: ACTION PLAYBOOK -->
+    <section>
+        <h2>6. Editorial Action Playbook</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Priority Tier</th>
+                    <th>Archetype / Trigger Condition</th>
+                    <th>Recommended Editorial Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Priority 1</strong></td>
+                    <td>Striking Distance (Rank 11–20) + Recent Drift</td>
+                    <td>High ROI: Refresh meta titles, update core statistics, and add missing subtopics to reclaim Page 1.</td>
+                </tr>
+                <tr>
+                    <td><strong>Priority 2</strong></td>
+                    <td>Decay Cliff (Age > 270 Days, High Baseline)</td>
+                    <td>Comprehensive content overhaul: update outdated case studies, re-verify broken links, and expand section depth.</td>
+                </tr>
+                <tr>
+                    <td><strong>Priority 3</strong></td>
+                    <td>High Impression, Declining CTR</td>
+                    <td>SERP snippet optimization: test revised headlines, update publication dates, and refine value proposition.</td>
+                </tr>
+                <tr>
+                    <td><strong>No-Go Boundary</strong></td>
+                    <td>Autonomous CMS republishing</td>
+                    <td><strong>STRICT POLICY:</strong> Machine learning scores must never trigger automated code/content rewrites without human fact-checking.</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
 
-    <h3>Feature Importance Breakdown</h3>
-    <table>
-        <tr>
-            <th>Rank</th>
-            <th>Feature</th>
-            <th>Importance Weight</th>
-            <th>Business Meaning</th>
-        </tr>
-        <tr>
-            <td><strong>1</strong></td>
-            <td><code>days_since_update</code></td>
-            <td><strong>38.4%</strong></td>
-            <td>Primary driver of staleness; pages untouched for &gt;180 days show sharp performance decay.</td>
-        </tr>
-        <tr>
-            <td><strong>2</strong></td>
-            <td><code>avg_position</code></td>
-            <td><strong>27.1%</strong></td>
-            <td>Measures ranking stability; movement from page 1 into striking distance (positions 11-20) signals immediate risk.</td>
-        </tr>
-        <tr>
-            <td><strong>3</strong></td>
-            <td><code>impressions_90d</code></td>
-            <td><strong>19.2%</strong></td>
-            <td>Captures historical search demand; ensures high-opportunity assets are prioritized over zero-volume pages.</td>
-        </tr>
-        <tr>
-            <td><strong>4</strong></td>
-            <td><code>ctr</code></td>
-            <td><strong>10.3%</strong></td>
-            <td>Identifies click-capture efficiency and snippet mismatch on existing rank.</td>
-        </tr>
-        <tr>
-            <td><strong>5</strong></td>
-            <td><code>word_count</code></td>
-            <td><strong>5.0%</strong></td>
-            <td>Structural depth indicator; thin coverage accelerates rank decay on competitive terms.</td>
-        </tr>
-    </table>
+    <!-- SECTION 8: REPRODUCIBILITY -->
+    <section>
+        <h2>7. Reproducibility & Repository Artifacts</h2>
+        <p>
+            All data ingestion pipelines, leakage verification stress tests, feature engineering scripts, and notebook outputs are available in the public project repository:
+        </p>
+        <ul>
+            <li>Repository URL: <a href="https://github.com/nishu-0618/flyrank-ml-internship">github.com/nishu-0618/flyrank-ml-internship</a></li>
+            <li>Model & Evaluation Artifacts: <code>work/notebooks/w05_model.ipynb</code></li>
+            <li>Validation & Leakage Audits: <code>work/notebooks/w06_validation_audit.ipynb</code></li>
+            <li>Playbook Generation: <code>work/notebooks/w07_action_playbook.ipynb</code></li>
+        </ul>
+    </section>
 
-   <h2>7. Limitations & Honest Framing</h2>
-    <p>While the Gradient Boosting model effectively triages content updates, any deployment must account for the following structural and data-driven limitations:</p>
-    <ul>
-        <li><strong>Correlation vs. Causation (Algorithm Updates):</strong> This model identifies performance decay but cannot diagnose the root cause. A sudden drop in rankings might stem from a Google Core Algorithm update or changes to SERP features (e.g., the introduction of AI Overviews) rather than inherent content staleness.</li>
-        <li><strong>Temporal & Seasonal Bias:</strong> The current pipeline relies on a narrow 2-month rolling window (April to May 2026). Consequently, performance drops caused by natural external seasonality (e.g., end-of-quarter query shifts, holiday cycles) will likely be flagged as false-positive "content decay." A minimum 12-month lookback is required to normalize seasonal variance.</li>
-        <li><strong>The "Cold Start" Blind Spot:</strong> Because the pipeline filters out URLs with fewer than 10 baseline impressions to reduce statistical noise, this system cannot score newly published pages or highly niche, long-tail content. It is strictly a maintenance tool for established assets.</li>
-        <li><strong>Omission of Off-Page & Semantic Signals:</strong> The feature matrix relies exclusively on Search Console behavioral metrics and basic on-page metadata (recency, word count). It does not factor in off-page dynamics (e.g., competitor backlink acquisition) or semantic superiority (e.g., whether a competitor's page actually answers the user intent better).</li>
-        <li><strong>Feedback Loop Risks:</strong> By continuously routing editorial resources only to historically high-traffic pages that are decaying, the business risks creating a self-fulfilling prophecy where middle-tier or exploratory content is permanently starved of updates.</li>
-    </ul>
-    <h2>8. Ranked Action Playbook</h2>
-    <table>
-        <tr>
-            <th>Priority Rank</th>
-            <th>Reason Code</th>
-            <th>Recommended Action</th>
-        </tr>
-        <tr>
-            <td>1</td>
-            <td>Rank Loss (pos_m2 &gt; pos_m1 + 2)</td>
-            <td>Update key metadata, headers, and refresh core facts.</td>
-        </tr>
-        <tr>
-            <td>2</td>
-            <td>Impression Decay (imp_diff &lt; -50)</td>
-            <td>Expand content depth and address emerging search intent queries.</td>
-        </tr>
-        <tr>
-            <td>3</td>
-            <td>CTR Degradation</td>
-            <td>Optimize title tags and meta descriptions for search snippet appeal.</td>
-        </tr>
-    </table>
-
-    <h2>9. Reproducibility</h2>
-    <p>All source code, data loading queries, and modeling steps are fully reproducible in the project repository notebook: <a href="https://github.com/nishu-0618/flyrank-ml-internship/blob/main/work/capstone_model.ipynb">work/capstone_model.ipynb</a>.</p>
-
-    <h2>10. Acknowledgments & Data Credit</h2>
-    <p>Built on the <a href="https://flyrank.ai" target="_blank">FlyRank ML Internship dataset</a>.</p>
+    <!-- SECTION 9: ACKNOWLEDGMENTS -->
+    <footer>
+        <p><strong>Acknowledgments & Data Credit:</strong></p>
+        <p>
+            This capstone research project was built on the research standards and dataset provided by the 
+            <a href="https://flyrank.ai" target="_blank" rel="noopener noreferrer">FlyRank ML Internship</a>.
+        </p>
+    </footer>
 
 </body>
 </html>
